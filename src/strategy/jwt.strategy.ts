@@ -13,6 +13,14 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
+  /**
+   * Asynchronously validates a payload by finding a user with the matching ID, deleting the user's hash, and returning the user.
+   *
+   * @param {Object} payload - An object containing the user's ID and email.
+   * @param {number} payload.sub - The user's ID.
+   * @param {string} payload.email - The user's email.
+   * @return {Promise<Object>} Returns a promise that resolves with the user object.
+   */
   async validate(payload: { sub: number; email: string }) {
     console.log(payload);
     const user = await this.prisma.user.findUnique({
