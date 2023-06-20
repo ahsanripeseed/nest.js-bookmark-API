@@ -9,9 +9,9 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtGuard } from '../../src/guard';
+import { JwtGuard } from 'src/guard';
 import { BookmarkService } from './bookmark.service';
-import { GetUser } from '../../src/auth/decorator';
+import { GetUser } from 'src/auth/decorator';
 import { CreateBookmarkDto, EditBookmarkDto } from './dto';
 
 @UseGuards(JwtGuard)
