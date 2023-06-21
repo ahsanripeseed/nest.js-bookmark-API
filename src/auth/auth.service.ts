@@ -5,6 +5,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { SignupDto } from './dto/signup.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
    * @param {AuthDto} dto - An object containing the email and password of the user.
    * @return {Promise<User>} The created user object without the password hash.
    */
-  async signup(dto: AuthDto) {
+  async signup(dto: SignupDto) {
     const hash = await argon.hash(dto.password);
     //save the new user in the DB
     try {
@@ -28,6 +29,8 @@ export class AuthService {
         data: {
           email: dto.email,
           hash: hash,
+          firstName: dto.firstName,
+          lastName: dto.lastName,
         },
       });
       return this.signToken(user.id, user.email);
